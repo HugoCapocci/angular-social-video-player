@@ -1,7 +1,0 @@
-node_modules
-bower_components
-.bowerrc
-.idea
-.gitignore
-temp
-src/directive/*.js
