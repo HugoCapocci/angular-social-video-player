@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/node_modules/gulp-coffee/test/fixtures/grammar.js" />
+        <item url="file://$PROJECT_DIR$/src/directive/player.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/directive/player.js.js" />
+      <root url="file://$PROJECT_DIR$/src/directive/player.js.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/gulp-coffee/test/fixtures/grammar.js" />
+      <root url="file://$PROJECT_DIR$/src/directive/player.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

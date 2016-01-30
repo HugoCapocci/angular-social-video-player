@@ -1,0 +1,24 @@
+{
+  "name": "angular-social-video-player",
+  "version": "0.1.0",
+  "description": "Use video players from social networks with one AngularJS directive",
+  "main": ["dist/player.min.js"],
+  "keywords": [
+    "AngularJS",
+    "Angular",
+    "Dailymotion",
+    "Youtube",
+    "Vimeo"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "temp"
+  ],
+  "dependencies": {
+    "angular": ">=1.4.9"
+  },
+  "author": "Hugo Capocci",
+  "license": "MIT"
+}
