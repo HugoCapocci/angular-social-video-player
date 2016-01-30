@@ -1,6 +1,6 @@
 {
   "name": "angular-social-video-player",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use video players from social networks with one AngularJS directive",
   "directories": {
     "example": "examples",
