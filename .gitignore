@@ -1,5 +1,7 @@
 node_modules
-dist
 bower_components
 .bowerrc
+.idea
+.gitignore
 temp
+src/directive/*.js
