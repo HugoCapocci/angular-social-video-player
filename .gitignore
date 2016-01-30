@@ -1,7 +1,5 @@
-node_modules
-bower_components
-.bowerrc
+# IntelliJ project files
 .idea
-.gitignore
+bower_components
+node_modules
 temp
-src/directive/*.js
