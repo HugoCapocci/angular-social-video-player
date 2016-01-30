@@ -8,7 +8,7 @@ AngularJS directive that allow to display video player for youtube, dailymotion 
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Demo](#demo)
-- [Development](#development)
+- [Build](#build)
 - [License](#licence)
 
 ## About
@@ -22,16 +22,16 @@ When a video is played, paused, finished, the directive broadcast an event
 
 ## Installation
 
-You can install through bower soon:
+You can install through bower:
 
 ```
 bower install --save angular-social-video-player
 ```
 
-Using github hosting soon:
+Then add the source to your project
 
 ```
-<script src="//angular-social-video-player/dist/player.min.js" type="text/javascript"></script>
+<script src="bower_components/angular-social-video-player/dist/player.min.js" type="text/javascript"></script>
 ```
 
 Add the module dependency in your AngularJS app
@@ -45,26 +45,24 @@ Then use the directive sv-player
 <div sv-player auto-play="false" height="530" width="830" pause="false" video-provider="youtube" video-id="DmFImtgjoWE"></div>
 ```
 
+
+## Documentation
+
 An explanation of the properties :
 
 ### height, width (required attributes)
-
 Size of the generated iFrame
 
 ### video-provider (required attribute)
-
 can be 'youtube'/'google', 'daylimotion' or 'vimeo'
 
 ### video-id (required attribute)
-
 id of the video, not the url
 
 ### auto-play (optional attribute)
-
 if set to true, video will play automatically. Default to false
 
 ### pause (optional attribute)
-
 if set to true, current video will stop (if running). Default to false
 if the current video is paused and 'pause' is set to false, then the video will play 
 
