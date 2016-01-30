@@ -68,7 +68,7 @@ if the current video is paused and 'pause' is set to false, then the video will 
 
 ## Demo
 
-I'm using it on this page https://socialup.herokuapp.com/#/searchVideo
+Test it on jsfiddle https://jsfiddle.net/DrHelmut/2w6mycxy/
 
 ### Build
 Use command `npm run build` to build (gulp) the project files in the dist folder

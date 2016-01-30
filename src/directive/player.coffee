@@ -179,7 +179,7 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
         $compile(el)(scope)
         element.append(el)
         switch scope.videoProvider
-          when 'google' or 'youtube' then createYoutubePlayer()
+          when 'google', 'youtube' then createYoutubePlayer()
           when 'dailymotion' then createDailymotionPlayer()
           when 'vimeo' then createVimeoPlayer()
 
