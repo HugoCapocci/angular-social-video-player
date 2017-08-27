@@ -53,7 +53,7 @@ Then use the directive sv-player
   - Size of the generated iFrame
 
   **video-provider (required attribute)**
-  - can be 'youtube'/'google', 'daylimotion' or 'vimeo'
+  - can be 'youtube'/'google', 'dailymotion' or 'vimeo'
 
   **video-id (required attribute)**
   - id of the video, not the url
