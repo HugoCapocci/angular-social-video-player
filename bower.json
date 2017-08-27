@@ -1,7 +1,7 @@
 {
   "name": "angular-social-video-player",
-  "version": "0.1.1",
-  "description": "Use video players from social networks with one AngularJS directive",
+  "version": "0.2.0",
+  "description": "Play videos from multiple providers with only one AngularJS directive",
   "main": ["dist/player.min.js"],
   "keywords": [
     "AngularJS",
@@ -19,6 +19,12 @@
   "dependencies": {
     "angular": ">=1.4.9"
   },
-  "author": "Hugo Capocci",
-  "license": "MIT"
+  "authors": [
+    "Hugo Capocci"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/HugoCapocci/angular-social-video-player.git"
+  }
 }

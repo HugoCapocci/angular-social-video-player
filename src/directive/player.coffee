@@ -11,7 +11,7 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
     if typeof YT is 'undefined'
       promise = loadExternalAPI(YOUTUBE_API)
     if typeof DM is 'undefined'
-      if not promise
+      unless promise
         promise = loadExternalAPI(DAILYMOTION_API)
       else
         promise = promise.then(->
@@ -40,10 +40,10 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
     deferred.promise
 
   createElement = (src) ->
-    script = document.createElement('script')
+    script = document.createElement 'script'
     script.src = src
     document.body.appendChild(script)
-    console.log "script added: ", script
+    console.log 'script added: ', script
     script
 
   {
@@ -57,17 +57,16 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
       pause : '@pause'
 
     link : (scope, element) ->
-
       createDailymotionPlayer = ->
-        el = angular.element('<div id="videoPlayer"/>')
+        el = angular.element '<div id="videoPlayer"/>'
         $compile(el)(scope)
         element.children().remove()
-        element.append(el)
+        element.append el
         delete player.google
-        if not DM
-          console.log('DM playerNotLoaded')
+        unless DM
+          console.log 'DM playerNotLoaded'
         else
-          player.dailymotion = DM.player document.getElementById("videoPlayer"),
+          player.dailymotion = DM.player document.getElementById('videoPlayer'),
             video: scope.videoId,
             width: scope.width,
             height: scope.height,
@@ -75,34 +74,35 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
               autoplay: scope.autoPlay is 'true'
               mute: false
               api : '1'
-          player.dailymotion.addEventListener "ended", ->
-            scope.$emit('videoFinished')
-          player.dailymotion.addEventListener "apiready", ->
-            console.log("dailymotion player ready for API")
-          player.dailymotion.addEventListener "playing", ->
-            scope.$emit('videoStarted')
-          player.dailymotion.addEventListener "pause", ->
-            scope.$emit('videoPaused')
-          if(scope.autoPlay isnt 'true')
-            scope.$emit('videoPaused')
+
+          player.dailymotion.addEventListener 'ended', ->
+            scope.$emit 'videoFinished', player.dailymotion.currentTime
+          player.dailymotion.addEventListener 'apiready', ->
+            console.log 'dailymotion player ready for API'
+          player.dailymotion.addEventListener 'playing', ->
+            scope.$emit 'videoStarted', player.dailymotion.currentTime
+          player.dailymotion.addEventListener 'pause', ->
+            scope.$emit 'videoPaused', player.dailymotion.currentTime
+          if scope.autoPlay isnt 'true'
+            scope.$emit 'videoPaused', player.dailymotion.currentTime
 
       createYoutubePlayer = ->
-        el = angular.element('<div id="videoPlayer"/>')
+        el = angular.element '<div id="videoPlayer"/>'
         $compile(el)(scope)
         element.children().remove()
-        element.append(el)
+        element.append el
         delete player.dailymotion
-        console.log("YT.loaded? ",YT.loaded)
-        if not YT
-          console.log('YT playerNotLoaded')
+        console.log 'YT.loaded? ', YT.loaded
+        unless YT
+          console.log 'YT playerNotLoaded'
           $window.onYouTubePlayerAPIReady = onYouTubePlayerAPIReady
         else if YT.loaded
           onYouTubePlayerAPIReady()
         else
-          YT.ready(onYouTubePlayerAPIReady)
+          YT.ready onYouTubePlayerAPIReady
 
       onYouTubePlayerAPIReady = ->
-        player.google = new YT.Player document.getElementById("videoPlayer"),
+        player.google = new YT.Player document.getElementById('videoPlayer'),
           height : scope.height
           width : scope.width
           videoId : scope.videoId
@@ -110,23 +110,22 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
             'onReady': (event) ->
               if scope.autoPlay is 'true'
                 event.target.playVideo()
-                scope.$emit('videoStarted')
+                scope.$emit 'videoStarted'
               else
-                scope.$emit('videoPaused')
+                scope.$emit 'videoPaused'
             'onStateChange' : (event) ->
               switch (event.data)
-                when 0 then scope.$emit('videoFinished')
-                when 1 then scope.$emit('videoStarted')
-                when 2 then scope.$emit('videoPaused')
+                when 0 then scope.$emit 'videoFinished', player.google.getCurrentTime()
+                when 1 then scope.$emit 'videoStarted', player.google.getCurrentTime()
+                when 2 then scope.$emit 'videoPaused', player.google.getCurrentTime()
 
       createVimeoPlayer = ->
-
         playerOrigin = '*'
         el = angular.element '<iframe id="videoPlayer" src="https://player.vimeo.com/video/'+scope.videoId+'?api=1&player_id=videoPlayer" width="'+scope.width+'" height="'+scope.height+'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen/>'
         $compile(el)(scope)
         element.children().remove()
         element.append(el)
-        player.vimeo = document.getElementById('videoPlayer')
+        player.vimeo = document.getElementById 'videoPlayer'
 
         onMessageReceived = (event) ->
           #Handle messages for the vimeo player only
@@ -137,17 +136,17 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
           data = JSON.parse(event.data)
           switch (data.event)
             when 'ready' then onReady()
-            when 'play' then scope.$emit('videoStarted')
-            when 'pause' then scope.$emit('videoPaused')
-            when 'finish' then scope.$emit('videoFinished')
+            when 'play' then scope.$emit 'videoStarted'
+            when 'pause' then scope.$emit 'videoPaused'
+            when 'finish' then scope.$emit 'videoFinished'
 
         # Listen for messages from the player
-        if not isVimeoListener
+        unless isVimeoListener
           if window.addEventListener
-            window.addEventListener('message', onMessageReceived, false)
+            window.addEventListener 'message', onMessageReceived, false
             isVimeoListener=true
           else
-            window.attachEvent('onmessage', onMessageReceived, false)
+            window.attachEvent 'onmessage', onMessageReceived, false
 
         # Helper function for sending a message to the player
         post = (action, value) ->
@@ -155,29 +154,28 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
             method: action
           if value
             data.value = value
-          message = JSON.stringify(data);
-          player.vimeo.contentWindow.postMessage(message, playerOrigin)
+          message = JSON.stringify data
+          player.vimeo.contentWindow.postMessage message, playerOrigin
 
         player.vimeo.post = post
 
         onReady = ->
-          post('addEventListener', 'pause')
-          post('addEventListener', 'finish')
-          post('addEventListener', 'play')
+          post 'addEventListener', 'pause'
+          post 'addEventListener', 'finish'
+          post 'addEventListener', 'play'
           #autoplay
           if scope.autoPlay is 'true'
             console.log 'autoplay is true'
-            post('play')
+            post 'play'
           else
-            scope.$emit('videoPaused')
-
+            scope.$emit 'videoPaused'
         return
 
       loadExternalAPIs().then ->
-        console.log("external script added and loaded")
-        el = angular.element('<div id="videoPlayer"/>')
+        console.log 'external script added and loaded'
+        el = angular.element '<div id="videoPlayer"/>'
         $compile(el)(scope)
-        element.append(el)
+        element.append el
         switch scope.videoProvider
           when 'google', 'youtube' then createYoutubePlayer()
           when 'dailymotion' then createDailymotionPlayer()
@@ -192,39 +190,37 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
           when 'vimeo' then createVimeoPlayer()
 
       scope.$watch 'videoId', (newValue, oldValue) ->
-
         if newValue is oldValue
           return
         if scope.videoProvider is 'google' or scope.videoProvider is 'youtube'
-          #console.log("load new google video")
           if not player.google or not player.google.loadVideoById
             createYoutubePlayer()
           else
             if scope.autoPlay is 'true'
-              console.log("google autoplay TRUE")
-              player.google.loadVideoById(scope.videoId)
+              console.log 'google autoplay TRUE'
+              player.google.loadVideoById scope.videoId
             else
-              console.log("google autoplay FALSE")
-              player.google.cueVideoById(scope.videoId)
+              console.log 'google autoplay FALSE'
+              player.google.cueVideoById scope.videoId
         else if scope.videoProvider is 'dailymotion'
-          if not player.dailymotion
+          unless player.dailymotion
             createDailymotionPlayer()
           else
-            player.dailymotion.load scope.videoId , {autoplay: scope.autoPlay is 'true'}
+            player.dailymotion.load scope.videoId , { autoplay: scope.autoPlay is 'true' }
         else if scope.videoProvider is 'vimeo'
           createVimeoPlayer()
         else
-          console.error(scope.videoProvider+" player not set ")
+          console.error scope.videoProvider + ' player not set'
 
         if scope.autoPlay isnt 'true'
           $timeout ->
-            scope.$emit('videoPaused')
+            scope.$emit 'videoPaused'
 
       scope.$watch 'pause', (newValue, oldValue) ->
         if newValue is oldValue
           return
         switch scope.videoProvider
-          when 'google','youtube'
+          when 'google', 'youtube'
             if newValue is 'true'
               player.google.pauseVideo()
             else
@@ -236,9 +232,9 @@ videoPlayer = ($document, $window, $timeout, $compile, $q) ->
               player.dailymotion.play()
           when 'vimeo'
             if newValue is 'true'
-              player.vimeo.post('pause')
+              player.vimeo.post 'pause'
             else
-              player.vimeo.post('play')
+              player.vimeo.post 'play'
 
       scope.$on '$destroy', ->
         player = {}
