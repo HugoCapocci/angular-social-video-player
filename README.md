@@ -22,7 +22,7 @@ When a video is played, paused, finished, the directive broadcast an event
 
 ## Installation
 
-You can install through bower:
+Install with bower:
 
 ```
 bower install --save angular-social-video-player
@@ -30,7 +30,7 @@ bower install --save angular-social-video-player
 
 Then add the source to your project
 
-```
+```html
 <script src="bower_components/angular-social-video-player/dist/player.min.js" type="text/javascript"></script>
 ```
 
@@ -40,35 +40,54 @@ Add the module dependency in your AngularJS app
 angular.module('myApp', ['socialVideoPlayer']);
 ```
 
-Then use the directive sv-player 
-```
+Then use the directive sv-player
+```html
 <div sv-player auto-play="false" height="530" width="830" pause="false" video-provider="youtube" video-id="DmFImtgjoWE"></div>
 ```
 
-
 ## Documentation
 
-An explanation of the properties :
+- An explanation of the properties:
 
-### height, width (required attributes)
-Size of the generated iFrame
+  **height, width (required attributes)**
+  - Size of the generated iFrame
 
-### video-provider (required attribute)
-can be 'youtube'/'google', 'daylimotion' or 'vimeo'
+  **video-provider (required attribute)**
+  - can be 'youtube'/'google', 'daylimotion' or 'vimeo'
 
-### video-id (required attribute)
-id of the video, not the url
+  **video-id (required attribute)**
+  - id of the video, not the url
 
-### auto-play (optional attribute)
-if set to true, video will play automatically. Default to false
+  **auto-play (optional attribute)**
+  - if set to true, video will play automatically. Default to false
 
-### pause (optional attribute)
-if set to true, current video will stop (if running). Default to false
-if the current video is paused and 'pause' is set to false, then the video will play 
+  **pause (optional attribute)**
+  - if set to true, current video will stop (if running). Default to false
+  - if the current video is paused and 'pause' is set to false, then the video will play
+
+
+- Events emitted by the directive:
+
+  **videoStarted** emitted when a video start and when a pause is finished
+  ```javascript
+  $scope.$on('videoStarted', function(event, currentTime) { ... });
+  ```
+
+  **videoPaused**
+  ```javascript
+  $scope.$on('videoPaused', function(event, currentTime) { ... });
+  ```
+
+  **videoFinished** usefull to load another video programmatically
+  ```javascript
+  $scope.$on('videoFinished', function(event, currentTime) { ... });
+  ```
 
 ## Demo
 
-Test it on jsfiddle https://jsfiddle.net/DrHelmut/2w6mycxy/
+Test it on jsfiddle!
+* Youtube: https://jsfiddle.net/DrHelmut/n31y95ez/
+* Dailymotion: https://jsfiddle.net/DrHelmut/2w6mycxy/
 
 ### Build
 Use command `npm run build` to build (gulp) the project files in the dist folder
